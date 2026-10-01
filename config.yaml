@@ -1,0 +1,116 @@
+# Location & scope
+location:
+  # City list — matched case-insensitively against job location string.
+  # "Remote" and "India" are also honored as location keywords.
+  cities:
+    - Surat
+    - Ahmedabad
+    - Mumbai
+    - Bangalore
+    - Bengaluru
+    - Hyderabad
+    - Pune
+    - Remote
+    - India
+    - USA
+    - UK
+    - United Kingdom
+    - Germany
+    - Netherlands
+    - EMEA
+  allow_hybrid: true
+
+# What kind of roles to look for
+role_keywords:
+  - Software Engineer
+  - SDE
+  - Full Stack
+  - Full-Stack
+  - Backend
+  - Frontend
+  - Front-End
+  - Web Developer
+  - AI Engineer
+  - Machine Learning
+  - ML Engineer
+  - Intern
+  - Graduate
+  - Automation
+
+# Skill keywords that must appear in job description to score well
+skill_keywords:
+  - React
+  - Next.js
+  - Node.js
+  - Python
+  - JavaScript
+  - TypeScript
+  - MongoDB
+  - PostgreSQL
+  - Supabase
+  - TensorFlow
+  - Streamlit
+  - LLM
+  - Gemini
+  - Groq
+  - Docker
+  - Git
+  - REST
+
+# Anything matching these excludes the job (regardless of score)
+exclude_keywords:
+  - "PhD"
+  - "5+ years"
+  - "7+ years"
+  - "10+ years"
+  - "Manager"
+  - "Director"
+  - "VP"
+  - "C-level"
+
+# Matching
+matching:
+  min_score_to_send: 50    # auto-send email if >= this (rare; needs description match)
+  min_score_to_draft: 10   # prepare draft for manual submit if >= this (title-only matches)
+  max_matches_per_run: 15
+  max_days_since_posted: 14
+  top_n_per_source: 50
+  detail_fetch_top_n: 25   # fetch job detail pages for top-N candidates to get descriptions
+
+# Sources
+sources:
+  google_for_jobs: true
+  naukri: true
+  linkedin: true
+
+# Drafting
+drafting:
+  # "gemini" or "groq" — first non-empty key in .env wins
+  provider: gemini
+  model:
+    gemini: gemini-2.0-flash
+    groq: llama-3.3-70b-versatile
+  tone: professional
+  include_projects: true   # pick 2-3 projects from resume.md to name-drop
+
+# Submission
+email:
+  auto_send: true           # flip to false to draft everything
+  resume_pdf: resume.pdf    # path relative to project root
+  max_send_per_run: 5       # hard cap to avoid looking like a spam bot
+  max_send_per_company: 2
+  delay_seconds_between_sends: 20   # SMTP safety net
+
+# Output
+output:
+  daily_report: out/daily.md
+  cover_letters_dir: out/cover_letters
+  runs_log_dir: out/runs
+
+# Storage
+history_db: history.db
+
+# Scheduling (used by cron install)
+schedule:
+  daily_at: "07:00"        # local time
+  timezone: Asia/Kolkata
